@@ -2,3 +2,13 @@
     margin-top: 16px;
     width: 100%;
 }
+
+.container {
+    position: relative;
+}
+
+.progressbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
