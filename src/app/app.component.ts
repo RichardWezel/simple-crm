@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { AsyncPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
@@ -14,4 +16,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 })
 export class AppComponent {
   title = 'simple-crm';
+
+
+  constructor() {
+
+  }
 }
