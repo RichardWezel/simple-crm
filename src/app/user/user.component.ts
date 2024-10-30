@@ -8,16 +8,23 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
+import { User } from '../../models/user.class';
 
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatTooltipModule, MatFormFieldModule,
+  imports: [
+    MatButtonModule, 
+    MatIconModule, 
+    MatTooltipModule, 
+    MatFormFieldModule,
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    CdkScrollable, MatDialogModule],
+    CdkScrollable, 
+    MatDialogModule
+  ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
@@ -25,13 +32,12 @@ export class UserComponent {
   positionOptions: TooltipPosition[] = ['above'];
   position = new FormControl(this.positionOptions[0]);
 
+  user: User = new User();
+
+
   readonly dialog = inject(MatDialog);
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogAddUserComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(DialogAddUserComponent);
   }
 }

@@ -1,10 +1,10 @@
 export class User {
-    firstName: string;
-    lastName: string;
-    birthDate: number;
-    street: string;
-    zipCode: number;
-    city: string;
+    public firstName: string;
+    public lastName: string;
+    public birthDate: number;
+    public street: string;
+    public zipCode: number;
+    public city: string;
 
     constructor(obj?: any) {
         this.firstName = obj ? obj.firstName : '';
