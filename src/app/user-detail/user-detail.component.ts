@@ -1,5 +1,3 @@
-// users.component.ts
-
 import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,10 +19,9 @@ import { tap } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-user-detail',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     MatButtonModule, 
     MatIconModule, 
     MatTooltipModule, 
@@ -36,36 +33,10 @@ import { RouterLink } from '@angular/router';
     MatDialogModule,
     MatCardModule, 
     NgFor,
-    RouterLink
-  ],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+    RouterLink],
+  templateUrl: './user-detail.component.html',
+  styleUrl: './user-detail.component.scss'
 })
-export class UserComponent implements OnInit {
-  positionOptions: TooltipPosition[] = ['above'];
-  position = new FormControl(this.positionOptions[0]);
-  
-  allUsers$!: Observable<User[]>;
-  private usersSubscription!: Subscription; // Subscription speichern
+export class UserDetailComponent {
 
-  readonly dialog = inject(MatDialog);
-
-  constructor(private firebaseService: FirebaseService) {}
-
-  ngOnInit(): void {
-    this.allUsers$ = this.firebaseService.getUsers().pipe(
-      tap(users => console.log('Benutzerliste:', users)) // Logge die Daten
-    );
-  }
-
-  ngOnDestroy(): void {
-    // Subscription aufheben, um Speicherlecks zu vermeiden
-    if (this.usersSubscription) {
-      this.usersSubscription.unsubscribe();
-    }
-  }
-
-  openDialog() {
-    this.dialog.open(DialogAddUserComponent);
-  }
 }

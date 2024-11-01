@@ -8,9 +8,10 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter} from '@angular/material/core';
 import { User } from '../../models/user.class';
 import { FormsModule} from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { collection, addDoc } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -25,35 +26,36 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatDatepickerModule, 
     FormsModule, 
     AsyncPipe, 
-    MatProgressBarModule],
+    MatProgressBarModule,
+  NgIf],
   templateUrl: './dialog-add-user.component.html',
   styleUrl: './dialog-add-user.component.scss'
 })
 export class DialogAddUserComponent {
 
-  firestore: Firestore = inject(Firestore);
+ 
   user: User = new User;
   birthDate!: Date;
   loading = false;
 
-  constructor(){}
+  constructor(private firebaseService: FirebaseService){}
 
   saveUser() {
     this.user.birthDate = this.birthDate.getTime();
-    console.log('user', this.user);
+    console.log('Benutzer:', this.user);
     this.loading = true;
-    const usersCollection = collection(this.firestore, 'users');
 
-    addDoc(usersCollection, this.user.toJSON())
-    .then((docRef) => {
-      console.log("Benutzer hinzugefügt mit ID: ", docRef.id);
-      this.loading = false;
-      // Optional: Zeige eine Erfolgsmeldung an oder schließe den Dialog
-    })
-    .catch((error) => {
-      console.error("Fehler beim Hinzufügen des Benutzers: ", error);
-      // Optional: Zeige eine Fehlermeldung im UI an
-    });
+    this.firebaseService.addUser(this.user)
+      .then((docRef) => {
+        console.log("Benutzer hinzugefügt mit ID:", docRef.id);
+        this.loading = false;
+        // Optional: Erfolgsmeldung anzeigen oder Dialog schließen
+      })
+      .catch((error) => {
+        console.error("Fehler beim Hinzufügen des Benutzers:", error);
+        this.loading = false;
+        // Optional: Fehlermeldung im UI anzeigen
+      });
     
     
   }

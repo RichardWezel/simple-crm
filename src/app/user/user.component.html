@@ -2,35 +2,22 @@
 <mat-card appearance="outlined">
   <table class="user-table">
 
-    <tr> 
-      <th>Name</th>
-      <th>E-Mail</th>
-      <th>City</th>
-    </tr>
+    <thead>
+      <tr> 
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>City</th>
+      </tr>
+    </thead>
 
-    <tr> 
-      <td>Richard Wezel</td>
-      <td>richard.wezelt-online.de</td>
-      <td>Berlin</td>
-    </tr>
+    <tbody>
+      <tr *ngFor="let user of allUsers$ | async" [routerLink]="['/user', user.id]">
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td> {{ user.email }} </td>
+        <td>{{ user.city }}</td>
+      </tr>
 
-    <tr> 
-      <td>Richard Wezel</td>
-      <td>richard.wezelt-online.de</td>
-      <td>Berlin</td>
-    </tr>
-
-    <tr> 
-      <td>Richard Wezel</td>
-      <td>richard.wezelt-online.de</td>
-      <td>Berlin</td>
-    </tr>
-
-    <tr> 
-      <td>Richard Wezel</td>
-      <td>richard.wezelt-online.de</td>
-      <td>Berlin</td>
-    </tr>
+    </tbody>
 
   </table>
 </mat-card>
