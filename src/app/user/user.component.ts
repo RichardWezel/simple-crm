@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from '../../models/user.class';
+import {MatCardModule} from '@angular/material/card';
 
 
 @Component({
@@ -23,7 +24,8 @@ import { User } from '../../models/user.class';
     FormsModule,
     ReactiveFormsModule,
     CdkScrollable, 
-    MatDialogModule
+    MatDialogModule,
+    MatCardModule
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
