@@ -1,7 +1,7 @@
 // services/firebase.service.ts
 
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc, docData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 import { map } from 'rxjs/operators';
@@ -23,4 +23,12 @@ export class FirebaseService {
             map(users => users.map(userData => new User(userData)))
         );
     }
+
+    // Neue Methode zum Abrufen eines Benutzers nach ID
+  getUserById(id: string): Observable<User | undefined> {
+    const userDoc = doc(this.firestore, `users/${id}`);
+    return docData(userDoc, { idField: 'id' }).pipe(
+      map(userData => userData ? new User(userData) : undefined)
+    );
+  }
 }

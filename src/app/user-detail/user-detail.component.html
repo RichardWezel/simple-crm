@@ -1,15 +1,35 @@
-<mat-card class="user-detail-header">
-    <img src="assets/img/profile.png" alt="">
-    <div class="user-details">
-        <h2>Max Mustermann</h2>
-        email&#64;email.de
+
+
+<mat-card class="user-detail-header" *ngIf="(user$ | async) as user">
+  <mat-card-header>
+    <button class="menu" [matMenuTriggerFor]="userMenu" mat-icon-button >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="editUserdetail()">Edit</button>
+    </mat-menu>
+    <img mat-card-avatar src="assets/img/profile.png" alt="Profile Picture">
+    <div class="user-details-mail-and-name">
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      {{ user.email }}
     </div>
+  </mat-card-header>
 </mat-card>
 
-<mat-card class="mt-32">
-    <mat-card-title class="mt-32">Address</mat-card-title>
-    <mat-card-content>
-        Musterstraße 23 <br>
-        12345 Mustestadt
-    </mat-card-content>
+<mat-card class="user-details-main">
+  <mat-card-content *ngIf="(user$ | async) as user">
+    <button class="menu" [matMenuTriggerFor]="adressmenu" mat-icon-button>
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #adressmenu="matMenu">
+      <button mat-menu-item (click)="editMenu()">Edit</button>
+    </mat-menu>
+    <h3>Address</h3>
+    <p>{{ user.street }} <br>{{ user.zipCode }} {{ user.city }}</p>
+    <p><strong>Geburtsdatum:</strong> {{ user.birthDate | date }}</p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!loading && error">
+  <p>{{ error }}</p>
 </mat-card>

@@ -13,19 +13,28 @@
         object-fit: cover;
     }
 
+    .user-details-mail-and-name {
+        display: flex;
+        flex-direction: column;
+        height: 100px;
+        width: fit-content;
+        margin-left: 16px;
+        object-fit: cover;
+        justify-content: center;
+        position: relative;
+        h2 {
+            margin: 0;
+        }
+    }
     
 }
 
-.user-details {
-    display: flex;
-    flex-direction: column;
-    height: 100px;
-    width: fit-content;
-    margin-left: 16px;
-    object-fit: cover;
-    justify-content: center;
-    h2 {
-        margin: 0;
+.user-details-main {
+    position: relative;
+
+    .menu {
+        position: absolute !important;
+        right: 10px !important;
     }
 }
 
@@ -33,3 +42,4 @@ mat-card-title {
     margin-left: 16px;
     margin-top: 16px;
 }
+

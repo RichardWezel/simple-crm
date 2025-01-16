@@ -1,4 +1,4 @@
-// users.component.ts
+// user.component.ts
 
 import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,11 +14,11 @@ import { User } from '../../models/user.class';
 import { MatCardModule } from '@angular/material/card';
 import { FirebaseService } from '../../services/firebase.service';
 import { Observable } from 'rxjs';
-import { NgFor } from '@angular/common';
-import { CommonModule } from '@angular/common'; 
-import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AsyncPipe, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common'; 
+
 
 @Component({
   selector: 'app-user',
@@ -36,21 +36,25 @@ import { RouterLink } from '@angular/router';
     MatDialogModule,
     MatCardModule, 
     NgFor,
-    RouterLink
+    RouterLink,
+    AsyncPipe,
+   
   ],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
   positionOptions: TooltipPosition[] = ['above'];
   position = new FormControl(this.positionOptions[0]);
   
   allUsers$!: Observable<User[]>;
-  private usersSubscription!: Subscription; // Subscription speichern
 
   readonly dialog = inject(MatDialog);
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(
+    private firebaseService: FirebaseService, 
+    private router: Router // Injektion des Routers
+  ) {}
 
   ngOnInit(): void {
     this.allUsers$ = this.firebaseService.getUsers().pipe(
@@ -58,14 +62,11 @@ export class UserComponent implements OnInit {
     );
   }
 
-  ngOnDestroy(): void {
-    // Subscription aufheben, um Speicherlecks zu vermeiden
-    if (this.usersSubscription) {
-      this.usersSubscription.unsubscribe();
-    }
-  }
-
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
+  }
+
+  goToUser(id: string) {
+    this.router.navigate(['/user', id]);
   }
 }
